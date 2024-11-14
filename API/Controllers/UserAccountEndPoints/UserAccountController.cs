@@ -1,4 +1,5 @@
-﻿using API.Core.Repositories;
+﻿using API.Core.Domain;
+using API.Core.Repositories;
 using API.DTOs.UserAccount;
 using API.Helpers;
 using Microsoft.AspNetCore.Authorization;
@@ -17,6 +18,7 @@ namespace API.Controllers.UserAccountEndPoints
 
         [HttpPost]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("login")]
         public async Task<ActionResult<TokenResult>> Login([FromBody] LoginDto loginDto)
         {
@@ -42,8 +44,6 @@ namespace API.Controllers.UserAccountEndPoints
         }
 
         [HttpGet]
-        //[Route("get-user-by-email")]
-        //[Authorize]
         [NonAction]
         public async Task<ActionResult<UserDto>> GetUserByEmail(string email)
         {

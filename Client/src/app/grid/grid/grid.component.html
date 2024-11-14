@@ -1,0 +1,26 @@
+
+<dx-data-grid
+    id="dataGrid"
+    [allowColumnReordering]="true"
+    [dataSource]="clients"
+    keyExpr="id"
+    [allowColumnResizing]="true"
+    [columnAutoWidth]="true"
+    [showBorders]="true">
+
+    <dxo-search-panel [visible]="true"></dxo-search-panel>
+
+    <dxi-column dataField="id" sortOrder="asc"></dxi-column>
+    <dxi-column dataField="name" sortOrder="asc"></dxi-column>
+    <dxi-column dataField="phone" sortOrder="asc"></dxi-column>
+    <dxi-column dataField="email" sortOrder="asc"></dxi-column>
+    <dxi-column dataField="address" sortOrder="asc"></dxi-column>
+
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager
+      [visible]="true"
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[10]"
+    ></dxo-pager>
+
+</dx-data-grid>
