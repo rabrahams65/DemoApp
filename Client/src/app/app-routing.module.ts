@@ -5,6 +5,7 @@ import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
+  {path: 'accordion', loadChildren: () => import('./accordion/accordion.module').then(m => m.AccordionModule), canActivate: [AuthGuard]},
   {path: 'grid', loadChildren: () => import('./grid/grid.module').then(m => m.GridModule), canActivate: [AuthGuard]}
 ];
 

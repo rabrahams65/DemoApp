@@ -21,7 +21,7 @@ namespace API.Controllers.ClientEndPoints
         }
 
         [HttpGet]
-        //[Authorize] //TODO: Enable authorize again, enable pagination
+        //[Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("all-clients")]
         public async Task<ActionResult<IEnumerable<Client>>> GetAllClients([FromQuery] QueryParameters queryParameters)

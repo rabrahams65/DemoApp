@@ -1,17 +1,50 @@
-<form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
-    <label for="email">Email</label>
-    <input 
-      type="email" 
-      id="registerEmail" 
-      name="email"
-      [(ngModel)]="model.emailAddress">
-    <label for="password">Password</label>
-    <input 
-      type="password" 
-      id="registerPassword" 
-      name="password"
-      [(ngModel)]="model.password">
-    <button type="submit" class="btn btn-signin">Register</button>
-    <p>Already have an account? <a (click)="cancel()">Sign In</a></p>
-  </form>
-  
+<div class="login-container">
+  <div class="login-left">
+    <h2>Register</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()" autocomplete="off">
+        <label for="email">Username</label>
+        <input 
+          type="email" 
+          id="registerEmail" 
+          formControlName="registerEmailAddress"
+          placeholder="me@example.com">
+          <div class="invalid-feedback" *ngIf="registerForm.get('registerEmailAddress').hasError('required') && registerForm.get('registerEmailAddress').touched">
+            Please enter an email address as username
+          </div>
+          <div class="invalid-feedback" *ngIf="registerForm.get('registerEmailAddress').hasError('email')">
+            Username should be a valid email address
+          </div>
+    
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="registerPassword" 
+          formControlName="registerPassword">
+          <div  class="invalid-feedback" *ngIf="registerForm.get('registerPassword').hasError('required') && registerForm.get('registerPassword').touched">
+            Please enter a password
+          </div>
+          <div  class="invalid-feedback" *ngIf="registerForm.get('registerPassword').hasError('minlength') && registerForm.get('registerPassword').touched">
+            Password must be at least 6 characters long
+          </div>
+          <div class="invalid-feedback" *ngIf="registerForm.get('registerPassword').hasError('invalidPassword') && registerForm.get('registerPassword').touched">
+            Password should least have one Uppercase, Lowercase, Number and special character
+          </div>
+        
+        <label for="confirmPassword">Confirm Password</label>
+        <input 
+        type="password" 
+        id="confirmPassword" 
+        formControlName="confirmPassword">
+    
+        <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword').hasError('isMatching') && registerForm.get('confirmPassword').touched">
+          Confirm password must match password
+        </div>
+    
+        <button [disabled]="!registerForm.valid"  type="submit" class="btn btn-signin">Register</button>
+        <p>Already have an account? <a (click)="cancel()">Sign In</a></p>
+      </form>
+    
+  </div>
+</div>
+
+

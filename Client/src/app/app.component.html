@@ -1,5 +1,6 @@
-<div id="container">
-    <dx-menu [adaptivityEnabled]="true">
+<div id="container" *ngIf="currentUser$ |async">
+    <dx-menu [adaptivityEnabled]="true"
+    (onItemClick)="onItemClick($event)">
         <dxi-item 
             icon="menu"
         >
@@ -9,9 +10,16 @@
             </dxi-item> 
 
             <dxi-item 
-                text="Second Item"
+                text="Accordion"
             >
             </dxi-item> 
+
+            <dxi-item 
+                text="Log out"
+                
+            >
+            </dxi-item> 
+
         </dxi-item>
     </dx-menu>
 </div>

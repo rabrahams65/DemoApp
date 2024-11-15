@@ -3,11 +3,12 @@ import { Client } from 'src/app/_models/client';
 import { ClientsService } from 'src/app/_services/clients.service';
 
 @Component({
-  selector: 'app-grid',
-  templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.css']
+  selector: 'app-accordion',
+  templateUrl: './accordion.component.html',
+  styleUrls: ['./accordion.component.css']
 })
-export class GridComponent implements OnInit {
+export class AccordionComponent implements OnInit {
+
   clients: Client[] = [];
 
   constructor(private clientService: ClientsService){}
@@ -19,9 +20,6 @@ export class GridComponent implements OnInit {
   loadClients(){
     this.clientService.getClients().subscribe(clients => {
       this.clients = clients
-    }, error =>{
-      console.log(error)
     })
   }
-
 }

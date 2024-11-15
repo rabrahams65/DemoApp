@@ -4,6 +4,11 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   }
   
+  .login-left a {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
   .login-left, .login-right {
     flex: 1;
     display: flex;
@@ -88,3 +93,19 @@
     max-width: 100%;
     height: auto;
   }
+
+  #succesful-register {
+    color: #d1542e;
+  }
+
+  .invalid-feedback {
+    color: #d1542e;
+    margin-top: 10px;
+  }
+
+  button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}

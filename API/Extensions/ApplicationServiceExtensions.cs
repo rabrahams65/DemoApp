@@ -16,7 +16,13 @@ namespace API.Extensions
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<User, IdentityRole>(options => options.User.RequireUniqueEmail = true).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+            services.AddIdentity<User, IdentityRole>(options => {
+                options.User.RequireUniqueEmail = false;
+                options.Password.RequireDigit = false;
+                 options.Password.RequireLowercase = false;
+                  options.Password.RequireNonAlphanumeric = false;
+                   options.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
             return services;
         }

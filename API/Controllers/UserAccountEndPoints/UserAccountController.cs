@@ -44,7 +44,7 @@ namespace API.Controllers.UserAccountEndPoints
         }
 
         [HttpGet]
-        [NonAction]
+        [Route("getuserbyemail")]
         public async Task<ActionResult<UserDto>> GetUserByEmail(string email)
         {
             var result = await _accountRepository.GeUserByEmail(email);

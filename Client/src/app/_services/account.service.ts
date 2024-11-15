@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { User } from '../_models/user';
 import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/Environments/environment';
+import { ResponseMessage } from '../_models/responseMessage';
 
 @Injectable({
   providedIn: 'root'
@@ -30,10 +31,11 @@ export class AccountService {
 
   register(model: any){
     return this.http.post(this.baseUrl + 'useraccount/register', model).pipe(
-      map((user: User) => {
-        if (user){
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentUserSource.next(user);
+      map((response: ResponseMessage) => {
+        if (response){
+          // localStorage.setItem('user', JSON.stringify(user));
+          // this.currentUserSource.next(user);
+          return response;
         }
       })
     )

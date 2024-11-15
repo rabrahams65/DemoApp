@@ -5,11 +5,11 @@ namespace API.DTOs.UserAccount
     public class LoginDto
     {
         //[EmailAddress]
-        [Required]
+        //[Required]
         public string? EmailAddress { get; set; }
 
         //[DataType(DataType.Password)]
-        [Required]
+        //[Required]
         public string? Password { get; set; }
     }
 }

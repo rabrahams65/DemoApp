@@ -1,0 +1,18 @@
+<dx-accordion
+    [dataSource]="clients"
+    itemTemplate="item"
+    itemTitleTemplate="title" 
+    >
+
+    <div *dxTemplate="let client of 'title'">
+        {{ client.name }}
+    </div>
+    <div *dxTemplate="let client of 'item'">
+        {{"Email: " + client.email }}
+        <br>
+        {{"Phone: " + client.phone }}
+        <br>
+        {{"Address: " + client.address }}
+    </div>
+
+</dx-accordion>
