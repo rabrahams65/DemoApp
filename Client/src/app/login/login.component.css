@@ -109,3 +109,13 @@ button[disabled]{
   background-color: #cccccc;
   color: #666666;
 }
+
+@media only screen and (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+  }
+  .login-left, .login-right {
+    flex: none;
+    width: 82%;
+  }
+}
