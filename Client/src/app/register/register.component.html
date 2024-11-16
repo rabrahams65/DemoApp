@@ -16,10 +16,14 @@
           </div>
     
         <label for="password">Password</label>
-        <input 
-          type="password" 
+        <div class="password-input-wrapper">
+          <input 
+          type="{{showPassword ? 'text' : 'password'}}" 
           id="registerPassword" 
           formControlName="registerPassword">
+          <span class="glyphicon" (click)="togglePasswordType('registerPassword')">
+            <i class="fas" [ngClass]="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
+          </span>
           <div  class="invalid-feedback" *ngIf="registerForm.get('registerPassword').hasError('required') && registerForm.get('registerPassword').touched">
             Please enter a password
           </div>
@@ -29,16 +33,31 @@
           <div class="invalid-feedback" *ngIf="registerForm.get('registerPassword').hasError('invalidPassword') && registerForm.get('registerPassword').touched">
             Password should least have one Uppercase, Lowercase, Number and special character
           </div>
+        </div>
         
         <label for="confirmPassword">Confirm Password</label>
-        <input 
-        type="password" 
-        id="confirmPassword" 
-        formControlName="confirmPassword">
-    
-        <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword').hasError('isMatching') && registerForm.get('confirmPassword').touched">
-          Confirm password must match password
+        <div class="password-input-wrapper">
+          <input 
+            type="{{showConfirmPassword ? 'text' : 'password'}}" 
+            id="confirmPassword" 
+            formControlName="confirmPassword">
+            <span class="glyphicon" (click)="togglePasswordType('confirmPassword')">
+              <i class="fas" [ngClass]="{'fa-eye': showConfirmPassword, 'fa-eye-slash': !showConfirmPassword}"></i>
+            </span>
+        
+            <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword').hasError('isMatching') && registerForm.get('confirmPassword').touched">
+                Confirm password must match password
+            </div>
+
+            <div class="invalid-feedback" *ngIf="apiErrorFeedback">
+              <ul>
+                <li *ngFor="let error of apiErrorFeedback">{{error}}</li>
+              </ul>
+            </div>
+
         </div>
+       
+        
     
         <button [disabled]="!registerForm.valid"  type="submit" class="btn btn-signin">Register</button>
         <p>Already have an account? <a (click)="cancel()">Sign In</a></p>

@@ -31,7 +31,12 @@ export class AccountService {
 
   register(model: any){
     return this.http.post(this.baseUrl + 'useraccount/register', model).pipe(
-      map((response: ResponseMessage) => {
+      map((response: any) => {
+        
+        if(response.errors.length > 0){
+          return response.errors
+        }
+        
         if (response){
           // localStorage.setItem('user', JSON.stringify(user));
           // this.currentUserSource.next(user);

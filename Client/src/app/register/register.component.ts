@@ -13,6 +13,10 @@ export class RegisterComponent implements OnInit {
   @Output() registerSuccesful = new EventEmitter();
   model: any = {};
   registerForm: FormGroup;
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
+  passwordType: string;
+  apiErrorFeedback: string[];
 
   constructor(private accountService: AccountService, private router: Router, private fb: FormBuilder){}
   
@@ -55,18 +59,24 @@ export class RegisterComponent implements OnInit {
       password: this.registerForm.get('registerPassword').value
     }
     
-    console.log(newUser)
     this.accountService.register(newUser).subscribe(response => {
       if(response.succeeded){
         this.cancel();
         this.registerSuccesful.emit(true);
       }
     }, error => {
-      console.log(error);
+      console.log("The errors are: " + error.error.errors)
+      this.apiErrorFeedback = error.error.errors;
     })
   }
 
   cancel() {
     this.cancelRegister.emit(false);
+  }
+
+  togglePasswordType(type: string) {
+    console.log(type)
+    if(type =='registerPassword')this.showPassword = !this.showPassword;
+    if(type =='confirmPassword')this.showConfirmPassword = !this.showConfirmPassword;
   }
 }

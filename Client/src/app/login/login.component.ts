@@ -17,6 +17,9 @@ export class LoginComponent implements OnInit {
   model: any = {}
   currentUser$: Observable<User>;
   loginForm: FormGroup;
+  showPassword: boolean = false;
+  passwordType: string;
+  apiErrorFeedback: string;
 
   constructor(private accountservice : AccountService, private router: Router, private fb: FormBuilder) {}
 
@@ -47,7 +50,8 @@ export class LoginComponent implements OnInit {
     this.accountservice.login(this.loginForm.value).subscribe(response => {
       this.router.navigateByUrl('/grid');
     }, error => {
-      console.log(error);
+      console.log(error.error.error);
+      this.apiErrorFeedback = error.error.error;
     })
   }
 
@@ -58,7 +62,16 @@ export class LoginComponent implements OnInit {
 
   registerToggle(){
     this.registerMode = !this.registerMode;
-    console.log("register mode = " + this.registerMode)
+    this.resetLoginForm();
+  }
+
+  resetLoginForm(){
+    this.loginForm.reset();
+    this.togglePasswordType()
+  }
+
+  togglePasswordType() {
+    this.showPassword = !this.showPassword;
   }
 
   cancelRegisterMode(event: boolean) {
@@ -68,5 +81,6 @@ export class LoginComponent implements OnInit {
   checkRegisterStatus(event: boolean) {
     this.registerSuccessful = event;
   }
+
 
 }

@@ -3,25 +3,29 @@
       <h2>Login</h2>
       <h3 *ngIf="registerSuccessful" id="succesful-register">Registered successfully, please log in</h3>
 
-      <form [formGroup]="loginForm" (ngSubmit)="loginForm.valid && login()" autocomplete="off">
+      <form [formGroup]="loginForm" (ngSubmit)="loginForm.valid && login()" autocomplete="off" id="login-form">
         <label for="email">Username</label>
         <input 
           type="email" 
           id="email" 
           formControlName="emailAddress"
-          placeholder="me@example.com">
+          placeholder="me@example.com" />
           <div class="invalid-feedback" *ngIf="loginForm.get('emailAddress').hasError('required') && loginForm.get('emailAddress').touched">
             Email address cannot be blank
           </div>
           <div class="invalid-feedback" *ngIf="loginForm.get('emailAddress').hasError('email')">
             Username should be a valid email address
           </div>
-
+        
         <label for="password">Password</label>
-        <input 
-          type="password" 
+        <div class="password-input-wrapper">
+          <input 
+          type="{{showPassword ? 'text' : 'password'}}" 
           id="password" 
-          formControlName="password">
+          formControlName="password" />
+          <span class="glyphicon" (click)="togglePasswordType()">
+            <i class="fas" [ngClass]="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
+          </span>
           <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
             Please enter a password
           </div>
@@ -31,11 +35,16 @@
           <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('invalidPassword') && loginForm.get('password').touched">
             Password should least have one Uppercase, Lowercase, Number and special character
           </div>
+          <div class="invalid-feedback" *ngIf="apiErrorFeedback">
+            {{apiErrorFeedback}}
+          </div>
+        </div>
 
         <button [disabled]="!loginForm.valid" type="submit" class="btn btn-signin">Sign In</button>
       </form>
       <p>Don't have an account? <a (click)="registerToggle()">Sign Up Now</a></p>
     </div>
+    
     <div class="login-right">
       <div class="login-info">
         <h3>Why should I login?</h3>
