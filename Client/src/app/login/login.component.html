@@ -10,8 +10,8 @@
           id="email" 
           formControlName="emailAddress"
           placeholder="me@example.com" />
-          <div class="invalid-feedback" *ngIf="loginForm.get('emailAddress').hasError('required') && loginForm.get('emailAddress').touched">
-            Email address cannot be blank
+          <div class="invalid-feedback" *ngIf="loginForm.get('emailAddress').hasError('required') && loginForm.get('emailAddress').dirty">
+            Username cannot be blank
           </div>
           <div class="invalid-feedback" *ngIf="loginForm.get('emailAddress').hasError('email')">
             Username should be a valid email address
@@ -26,13 +26,13 @@
           <span class="glyphicon" (click)="togglePasswordType()">
             <i class="fas" [ngClass]="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
           </span>
-          <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
+          <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').dirty">
             Please enter a password
           </div>
-          <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('minlength') && loginForm.get('password').touched">
+          <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('minlength') && loginForm.get('password').dirty">
             Password must have a minimum length of 6
           </div>
-          <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('invalidPassword') && loginForm.get('password').touched">
+          <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('invalidPassword') && loginForm.get('password').dirty">
             Password should least have one Uppercase, Lowercase, Number and special character
           </div>
           <div class="invalid-feedback" *ngIf="apiErrorFeedback && !loginForm.touched">

@@ -8,7 +8,7 @@
           id="registerEmail" 
           formControlName="registerEmailAddress"
           placeholder="me@example.com">
-          <div class="invalid-feedback" *ngIf="registerForm.get('registerEmailAddress').hasError('required') && registerForm.get('registerEmailAddress').touched">
+          <div class="invalid-feedback" *ngIf="registerForm.get('registerEmailAddress').hasError('required') && registerForm.get('registerEmailAddress').dirty">
             Please enter an email address as username
           </div>
           <div class="invalid-feedback" *ngIf="registerForm.get('registerEmailAddress').hasError('email')">
@@ -24,13 +24,13 @@
           <span class="glyphicon" (click)="togglePasswordType('registerPassword')">
             <i class="fas" [ngClass]="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
           </span>
-          <div  class="invalid-feedback" *ngIf="registerForm.get('registerPassword').hasError('required') && registerForm.get('registerPassword').touched">
+          <div  class="invalid-feedback" *ngIf="registerForm.get('registerPassword').hasError('required') && registerForm.get('registerPassword').dirty">
             Please enter a password
           </div>
-          <div  class="invalid-feedback" *ngIf="registerForm.get('registerPassword').hasError('minlength') && registerForm.get('registerPassword').touched">
+          <div  class="invalid-feedback" *ngIf="registerForm.get('registerPassword').hasError('minlength') && registerForm.get('registerPassword').dirty">
             Password must be at least 6 characters long
           </div>
-          <div class="invalid-feedback" *ngIf="registerForm.get('registerPassword').hasError('invalidPassword') && registerForm.get('registerPassword').touched">
+          <div class="invalid-feedback" *ngIf="registerForm.get('registerPassword').hasError('invalidPassword') && registerForm.get('registerPassword').dirty">
             Password should least have one Uppercase, Lowercase, Number and special character
           </div>
         </div>
@@ -45,7 +45,7 @@
               <i class="fas" [ngClass]="{'fa-eye': showConfirmPassword, 'fa-eye-slash': !showConfirmPassword}"></i>
             </span>
         
-            <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword').hasError('isMatching') && registerForm.get('confirmPassword').touched">
+            <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword').hasError('isMatching') && registerForm.get('confirmPassword').dirty">
                 Confirm password must match password
             </div>
 
