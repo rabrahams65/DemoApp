@@ -121,6 +121,7 @@
     margin-top: 10px;
   }
 
+<<<<<<< HEAD
   .login-left .btn-signin:disabled,
   .login-left .btn-signin[disabled]{
     background-color: #cccccc;
@@ -159,3 +160,21 @@
       width: 100%;
     }
   }
+=======
+  button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+@media only screen and (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+  }
+  .login-left, .login-right {
+    flex: none;
+    width: 82%;
+  }
+}
+>>>>>>> 007fc30942cfdd6060a284eee7d4bb1b7355fc87
