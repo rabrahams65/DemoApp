@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
@@ -11,17 +11,19 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Vali
   styleUrls: ['./login.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit{
   registerMode = false;
   registerSuccessful = false;
+  showPassword: boolean = false;
+  IsSigningIn: boolean = false;
   model: any = {}
   currentUser$: Observable<User>;
   loginForm: FormGroup;
-  showPassword: boolean = false;
   passwordType: string;
   apiErrorFeedback: string;
 
   constructor(private accountservice : AccountService, private router: Router, private fb: FormBuilder) {}
+
 
   ngOnInit(): void {
    this.currentUser$ = this.accountservice.currentUser$;
@@ -47,11 +49,14 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.accountservice.login(this.loginForm.value).subscribe(response => {
+    this.IsSigningIn = true;
+    this.accountservice.login(this.loginForm.value).subscribe(() => {
+      
       this.router.navigateByUrl('/grid');
     }, error => {
-      console.log(error.error.error);
+      this.IsSigningIn = false;
       this.apiErrorFeedback = error.error.error;
+      this.loginForm.markAsUntouched()
     })
   }
 
@@ -67,7 +72,7 @@ export class LoginComponent implements OnInit {
 
   resetLoginForm(){
     this.loginForm.reset();
-    this.togglePasswordType()
+    this.showPassword = false;
   }
 
   togglePasswordType() {

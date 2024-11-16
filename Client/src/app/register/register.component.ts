@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+  IsRegistering: boolean = false;
   passwordType: string;
   apiErrorFeedback: string[];
 
@@ -53,7 +54,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-
+    this.IsRegistering = true;
     var newUser = {
       emailAddress : this.registerForm.get('registerEmailAddress').value,
       password: this.registerForm.get('registerPassword').value
@@ -65,8 +66,9 @@ export class RegisterComponent implements OnInit {
         this.registerSuccesful.emit(true);
       }
     }, error => {
-      console.log("The errors are: " + error.error.errors)
-      this.apiErrorFeedback = error.error.errors;
+      this.IsRegistering = false;
+      this.apiErrorFeedback = error?.error?.errors;
+      this.registerForm.markAsUntouched()
     })
   }
 
@@ -75,7 +77,6 @@ export class RegisterComponent implements OnInit {
   }
 
   togglePasswordType(type: string) {
-    console.log(type)
     if(type =='registerPassword')this.showPassword = !this.showPassword;
     if(type =='confirmPassword')this.showConfirmPassword = !this.showConfirmPassword;
   }

@@ -35,12 +35,18 @@
           <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('invalidPassword') && loginForm.get('password').touched">
             Password should least have one Uppercase, Lowercase, Number and special character
           </div>
-          <div class="invalid-feedback" *ngIf="apiErrorFeedback">
+          <div class="invalid-feedback" *ngIf="apiErrorFeedback && !loginForm.touched">
             {{apiErrorFeedback}}
           </div>
         </div>
 
-        <button [disabled]="!loginForm.valid" type="submit" class="btn btn-signin">Sign In</button>
+        <button [disabled]="!loginForm.valid || IsSigningIn" type="submit" class="btn btn-signin">
+          <div *ngIf="!IsSigningIn">Sign In</div>
+          <div class="fa-lg loading-spinner" *ngIf="IsSigningIn">
+            Please wait <i class="fas fa-spinner fa-spin"></i>
+          </div>
+        </button>
+
       </form>
       <p>Don't have an account? <a (click)="registerToggle()">Sign Up Now</a></p>
     </div>

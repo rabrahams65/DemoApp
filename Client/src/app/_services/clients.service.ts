@@ -14,8 +14,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ClientsService {
-  private baseUrl = environment.apiUrl;
-
+  baseUrl = environment.apiUrl;
+  
   constructor(private http: HttpClient) { }
 
   getClients() {

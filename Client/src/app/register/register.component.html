@@ -49,17 +49,19 @@
                 Confirm password must match password
             </div>
 
-            <div class="invalid-feedback" *ngIf="apiErrorFeedback">
+            <div class="invalid-feedback" *ngIf="apiErrorFeedback && !registerForm.touched">
               <ul>
                 <li *ngFor="let error of apiErrorFeedback">{{error}}</li>
               </ul>
             </div>
-
         </div>
-       
-        
-    
-        <button [disabled]="!registerForm.valid"  type="submit" class="btn btn-signin">Register</button>
+
+        <button [disabled]="!registerForm.valid || IsRegistering"  type="submit" class="btn btn-signin">
+          <div *ngIf="!IsRegistering">Register</div>
+          <div class="fa-lg loading-spinner" *ngIf="IsRegistering">
+            Please wait <i class="fas fa-spinner fa-spin"></i>
+          </div>
+        </button>
         <p>Already have an account? <a (click)="cancel()">Sign In</a></p>
       </form>
     
