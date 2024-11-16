@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { CustomValidators } from '../_extensions/validators.extension';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +29,7 @@ export class RegisterComponent implements OnInit {
   initializeForm() {
     this.registerForm = this.fb.group({
       registerEmailAddress: ['', [Validators.required, Validators.email]],
-      registerPassword: ['',[Validators.required, Validators.minLength(6), this.passwordComplexityValidator()]],
+      registerPassword: ['',[Validators.required, Validators.minLength(6), CustomValidators.passwordComplexityValidator]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6), this.matchValues('registerPassword')]]
     })
     this.registerForm.controls.registerPassword.valueChanges.subscribe(() => {
@@ -40,17 +41,6 @@ export class RegisterComponent implements OnInit {
     return (control: AbstractControl) => {
       return control?.value == control?.parent?.controls[matchTo].value ? null : {isMatching: true}
     }
-  }
-
-  passwordComplexityValidator(): ValidatorFn {
-    return (control: FormControl) => {
-      const password = control.value;
-      const hasUppercase = /[A-Z]/.test(password);
-      const hasLowercase = /[a-z]/.test(password);
-      const hasNumber = /\d/.test(password);
-      const hasSpecialChar = /[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/.test(password);
-      return hasUppercase && hasLowercase && hasNumber && hasSpecialChar ? null : { invalidPassword: true };
-    };
   }
 
   register(){

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { CustomValidators } from '../_extensions/validators.extension';
+
 
 @Component({
   selector: 'app-login',
@@ -33,19 +35,8 @@ export class LoginComponent implements OnInit{
   initializeForm() {
     this.loginForm = this.fb.group({
       emailAddress: ['', [Validators.required, Validators.email]],
-      password: ['',[Validators.required, Validators.minLength(6), this.passwordComplexityValidator()]]
+      password: ['',[Validators.required, Validators.minLength(6), CustomValidators.passwordComplexityValidator]]
     })
-  }
-
-  passwordComplexityValidator(): ValidatorFn {
-    return (control: FormControl) => {
-      const password = control.value;
-      const hasUppercase = /[A-Z]/.test(password);
-      const hasLowercase = /[a-z]/.test(password);
-      const hasNumber = /\d/.test(password);
-      const hasSpecialChar = /[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/.test(password);
-      return hasUppercase && hasLowercase && hasNumber && hasSpecialChar ? null : { invalidPassword: true };
-    };
   }
 
   login(){
