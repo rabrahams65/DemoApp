@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/Environments/environment';
 import { Client } from '../_models/client';
-import { Observable } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
+import { CacheService } from './cache.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -14,11 +15,24 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ClientsService {
-  baseUrl = environment.apiUrl;
-  
-  constructor(private http: HttpClient) { }
+  private baseUrl = environment.apiUrl;
 
-  getClients() {
-    return this.http.get<Client[]>(this.baseUrl + 'client/all-clients', httpOptions)
+  constructor(private http: HttpClient, private cacheService: CacheService) { }
+
+  // getClients() {
+  //   return this.http.get<Client[]>(this.baseUrl + 'client/all-clients', httpOptions)
+  // }
+
+  getClients(){
+    const cachedData = this.cacheService.get('clients');
+    if (cachedData) {
+      return of(cachedData);
+    }
+
+    return this.http.get<Client[]>(this.baseUrl + 'client/all-clients', httpOptions).pipe(
+      tap((data: any) => {
+        this.cacheService.put('clients',data)
+      })
+    )
   }
 }
