@@ -22,6 +22,7 @@ namespace API.Controllers.ClientEndPoints
 
         [HttpGet]
         //[Authorize]
+        [ApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("all-clients")]
         public async Task<ActionResult<IEnumerable<Client>>> GetAllClients([FromQuery] QueryParameters queryParameters)

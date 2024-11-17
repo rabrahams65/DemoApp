@@ -41,9 +41,9 @@ export class LoginComponent implements OnInit{
 
   login(){
     this.IsSigningIn = true;
-    this.accountservice.login(this.loginForm.value).subscribe(() => {
-      
-      this.router.navigateByUrl('/grid');
+    this.accountservice.login(this.loginForm.value).subscribe(response => {
+      if(this.accountservice.currentUser$)
+        this.router.navigateByUrl('/grid');
     }, error => {
       this.IsSigningIn = false;
       this.apiErrorFeedback = error.error.error;

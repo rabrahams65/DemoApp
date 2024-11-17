@@ -31,7 +31,7 @@ namespace API.Persistence.Repositories
         {
             var user = await _userManager.FindByEmailAsync(loginDto.EmailAddress);
 
-            if(user == null) return new TokenResult { Error = "Email or Password incorrect, please try again" };
+            if(user == null) return new TokenResult { Error = "Email address not registered, please sign up" };
 
             else {
                 var signInResult = await _signInManager.PasswordSignInAsync(user, loginDto.Password, isPersistent: true, lockoutOnFailure: false);
