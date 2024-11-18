@@ -3,6 +3,7 @@ using API.Core.Repositories;
 using API.DTOs.UserAccount;
 using API.Helpers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -29,7 +30,7 @@ namespace API.Persistence.Repositories
 
         public async Task<TokenResult> Login(LoginDto loginDto)
         {
-            var user = await _userManager.FindByEmailAsync(loginDto.EmailAddress);
+            var user = await GetEmailOnly(loginDto.EmailAddress!);
 
             if(user == null) return new TokenResult { Error = "Email address not registered, please sign up" };
 
@@ -40,7 +41,7 @@ namespace API.Persistence.Repositories
 
                     var authClaims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim(ClaimTypes.Name, user),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     };
 
@@ -54,10 +55,15 @@ namespace API.Persistence.Repositories
             return new TokenResult { Error = "Email or Password incorrect, please try again" };
         }
 
+        private async Task<string?> GetEmailOnly(string email){
+            return await _userManager.Users.IgnoreQueryFilters().Where(u => u.Email == email).Select(u => u.Email).FirstOrDefaultAsync();
+        }
+
         public async Task<Response> RegisterUser(RegisterDto registerDto)
         {
 
-            var user = await _userManager.FindByEmailAsync(registerDto.EmailAddress);
+            var user = await GetEmailOnly(registerDto.EmailAddress!);
+
 
             if(user is null)
             {
