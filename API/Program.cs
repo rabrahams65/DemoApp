@@ -65,11 +65,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+// }
 
 app.UseHttpsRedirection();
 
@@ -77,8 +77,17 @@ app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localh
 
 app.UseAuthentication();
 
+app.UseRouting();
+
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseDefaultFiles(); //After authorization, if there is an index.html in the root file, then it is going to serve that.
+app.UseStaticFiles(); //Add this as well to use the index file.
+
+app.UseEndpoints(endpoints => {
+    endpoints.MapControllers(); //Add MapControllers to this method scope. Also add app.UseRouting() before app.UseAuthorization above
+    endpoints.MapFallbackToController("Index", "Fallback");
+});
+
 
 app.Run();

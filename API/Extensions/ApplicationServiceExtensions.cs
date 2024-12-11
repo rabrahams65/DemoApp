@@ -15,7 +15,13 @@ namespace API.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+
+            var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+            var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+            var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
+            var connectionString = $"Data Source={dbHost};Initial Catalog={dbName}; User ID=sa; Password={dbPassword}; TrustServerCertificate=True";
+
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(config.GetConnectionString("Test")));
             services.AddIdentity<User, IdentityRole>(options => {
                 options.User.RequireUniqueEmail = false;
                 options.Password.RequireDigit = false;
