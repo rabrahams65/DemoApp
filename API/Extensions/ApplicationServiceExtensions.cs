@@ -21,7 +21,7 @@ namespace API.Extensions
             var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
             var connectionString = $"Data Source={dbHost};Initial Catalog={dbName}; User ID=sa; Password={dbPassword}; TrustServerCertificate=True";
 
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(config.GetConnectionString("Test")));
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(config.GetConnectionString("Azure")));
             services.AddIdentity<User, IdentityRole>(options => {
                 options.User.RequireUniqueEmail = false;
                 options.Password.RequireDigit = false;
