@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: 'http://localhost:5000/api/'
+    apiUrl: 'https://demoapp1-hgfkawbmdmdgcdbt.southafricanorth-01.azurewebsites.net/api/'
 }
